@@ -1,11 +1,21 @@
+import argparse
 import math
 
-method = str(input())  # 'What do you want to calculate? type "n" for number of monthly payments, type "a" for annuity monthly payment amount, type "p" for loan principal: '
-if method == "n":
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-t","--type",choices=["diff","annuity"],help="Select the type of calculation")
+parser.add_argument("--principal",help="Enter the Principal amount")
+parser.add_argument("--periods",help="Enter the number of periods")
+parser.add_argument("--interest",help="Enter the interest")
+parser.add_argument("--payment",help="Enter the payment")
+args = parser.parse_args()
+method = [args.type, args.principal, args.periods, args.interest, args.payment]
+
+if method[0] == "annuity" and method[1] != "None" and method[4] != "None" and method[3] != "None" :
     years = 0
-    usr_loan_principal = float(input())   # "Enter the loan principal: "
-    usr_monthly_payment = float(input())   # "Enter monthly payment: "
-    usr_loan_interest = float(input())  # "Enter the loan interest: "
+    usr_loan_principal = float(method[1])  # "Enter the loan principal: "
+    usr_monthly_payment = float(method[4])   # "Enter monthly payment: "
+    usr_loan_interest = float(method[3])  # "Enter the loan interest: "
     monthly_interest = float((usr_loan_interest / 100) / 12)
     number_of_months = math.ceil(math.log(usr_monthly_payment /
                                           (usr_monthly_payment - (monthly_interest * usr_loan_principal))
